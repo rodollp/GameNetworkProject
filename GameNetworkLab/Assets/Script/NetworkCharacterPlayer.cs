@@ -16,8 +16,8 @@ public class NetworkCharacterPlayer : NetworkBehaviour
         controller = GetComponent<CharacterController>();
         controller.enabled = false;
 
-        moveInput = moveActionAsset.action;
-        moveInput.Disable();
+        moveInput = moveActionAsset.action.Clone();
+        
     }
 
     public override void OnNetworkSpawn()
@@ -55,6 +55,9 @@ public class NetworkCharacterPlayer : NetworkBehaviour
         controller.Move(move* moveSpeed * Time.deltaTime);
     }
 
-
+    private void OnDestroy()
+    {
+        moveInput?.Disable();
+    }
 
 }

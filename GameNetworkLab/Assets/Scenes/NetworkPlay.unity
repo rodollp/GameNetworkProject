@@ -1502,10 +1502,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2735682774275751921, guid: e9d8fd76b2e0ba0478a8326c848f76d6, type: 3}
-      propertyPath: moveActionAsset
-      value: 
-      objectReference: {fileID: 3275134992969600311, guid: ec64f275eb7a89e498f591945f6cfb44, type: 3}
     - target: {fileID: 5394993176351869616, guid: e9d8fd76b2e0ba0478a8326c848f76d6, type: 3}
       propertyPath: m_Name
       value: PlayerNetworkPrefab
