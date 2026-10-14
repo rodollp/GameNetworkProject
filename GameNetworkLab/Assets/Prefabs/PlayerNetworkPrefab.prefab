@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 6018191540898998848}
   - component: {fileID: 1549881547954335741}
   - component: {fileID: 2735682774275751921}
+  - component: {fileID: 408553114591341342}
   m_Layer: 0
   m_Name: PlayerNetworkPrefab
   m_TagString: Untagged
@@ -239,3 +240,21 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   moveActionAsset: {fileID: 3275134992969600311, guid: ec64f275eb7a89e498f591945f6cfb44, type: 3}
   moveSpeed: 4
+--- !u!114 &408553114591341342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394993176351869616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc2a69ca52473d4fac9fbf52018736f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkScorePlayer
+  ShowTopMostFoldoutHeaderGroup: 1
+  Score:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
