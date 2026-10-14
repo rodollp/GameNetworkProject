@@ -47,6 +47,7 @@ public class NetworkScorePlayer : NetworkBehaviour
     {
         Score.Value += 1;
 
-        Debug.Log($"Player {OwnerClientId} Score: {Score.Value}");
+       Debug.Log($"Player {OwnerClientId} Score: {Score.Value}");
+       
     }
 }
