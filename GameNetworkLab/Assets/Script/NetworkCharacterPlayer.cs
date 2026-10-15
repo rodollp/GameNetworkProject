@@ -127,10 +127,21 @@ public class NetworkCharacterPlayer : NetworkBehaviour
     }
 
     // Unity에서 이 컴포넌트가 파괴될 때 호출된다.
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         // Clone()으로 복제한 InputAction의 리소스를 정리한다.
         // ?. 는 moveInput이 null이 아닐 때만 실행한다는 뜻이다.
         moveInput?.Dispose();
+        base.OnDestroy();
     }
+
+
+    [Rpc(SendTo.Server)]
+
+    private void MoveRequestRPC()
+    {
+
+    }
+
+
 }
