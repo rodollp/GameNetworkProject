@@ -1,12 +1,10 @@
-using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode;
 
 public class NetworkCoin : NetworkBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Coin Ãæµ¹ °¨Áö: {other.name}, IsServer: {IsServer}");
-
         if (!IsServer)
             return;
 
@@ -14,14 +12,11 @@ public class NetworkCoin : NetworkBehaviour
             other.GetComponentInParent<NetworkScorePlayer>();
 
         if (player == null)
-        {
-            Debug.LogWarning("NetworkScorePlayer¸¦ Ã£Áö ¸øÇÔ");
             return;
-        }
 
         player.Score.Value += 1;
 
-        Debug.Log($"Coin È¹µæ! Score: {player.Score.Value}");
+        Debug.Log($"Coin È¹µæ! Player: {player.OwnerClientId}, " + $"Score: {player.Score.Value}");
 
         NetworkObject.Despawn();
     }
