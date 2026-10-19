@@ -1,5 +1,5 @@
-using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode;
 
 public class NetworkScorePlayer : NetworkBehaviour
 {
@@ -10,44 +10,47 @@ public class NetworkScorePlayer : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        // 자기 Player의 점수를 UI에 연결
         ScoreUI scoreUI = FindAnyObjectByType<ScoreUI>();
 
         if (scoreUI != null)
         {
             scoreUI.SetPlayer(this);
         }
-
-        // 자기 Player의 점수 요청 메서드를 버튼에 등록
-        NetworkLancher.Instance.AddScore.onClick.AddListener(RequestAddScore);
     }
 
-    public override void OnNetworkDespawn()
+    public void RequestCollectCoin(ulong coinId)
     {
-        if (!IsOwner)
+        if (!IsOwner || !IsSpawned)
             return;
 
-        // Player가 사라지면 버튼 이벤트 연결 해제
-        if (NetworkLancher.Instance != null)
-        {
-            NetworkLancher.Instance.AddScore.onClick.RemoveListener(RequestAddScore);
-        }
-    }
-
-    public void RequestAddScore()
-    {
-        if (!IsOwner)
-            return;
-
-        RequestAddScoreRpc();
+        RequestCollectCoinRpc(coinId);
     }
 
     [Rpc(SendTo.Server)]
-    private void RequestAddScoreRpc()
+    private void RequestCollectCoinRpc(ulong coinId)
     {
-        Score.Value += 1;
+        if (!IsServer)
+            return;
 
-       Debug.Log($"Player {OwnerClientId} Score: {Score.Value}");
-       
+        // 1. 네트워크 오브젝트 ID 검색
+        bool found = NetworkManager.SpawnManager.SpawnedObjects
+            .TryGetValue(coinId, out NetworkObject coinObject);
+
+        if (!found)
+        {
+            Debug.Log($"코인 획득 거절: 잘못된 ID {coinId}");
+            return;
+        }
+
+        // 2. 실제 코인인지 확인
+        if (!coinObject.TryGetComponent(
+            out NetworkCoin coin))
+        {
+            Debug.Log("코인 획득 거절: 코인이 아닌 오브젝트");
+            return;
+        }
+
+        // 3. 코인에게 획득 검증 요청
+        coin.TryCollect(this);
     }
 }
