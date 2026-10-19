@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 5019602196963196437}
   - component: {fileID: 6018191540898998848}
   - component: {fileID: 1549881547954335741}
-  - component: {fileID: 2735682774275751921}
   - component: {fileID: 408553114591341342}
   - component: {fileID: 6940601355551084179}
   m_Layer: 0
@@ -165,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4055824480
+  GlobalObjectIdHash: 2753695185
   InScenePlacedSourceGlobalObjectIdHash: 2753695185
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -226,21 +225,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &2735682774275751921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5394993176351869616}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5396814087ec97343b239a60aa166764, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NetworkCharacterPlayer
-  ShowTopMostFoldoutHeaderGroup: 1
-  moveActionAsset: {fileID: 3275134992969600311, guid: ec64f275eb7a89e498f591945f6cfb44, type: 3}
-  moveSpeed: 4
 --- !u!114 &408553114591341342
 MonoBehaviour:
   m_ObjectHideFlags: 0
