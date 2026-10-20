@@ -38,6 +38,19 @@ public class NetworkScorePlayer : NetworkBehaviour
         RequestCollectCoinRpc(ulong.MaxValue);
     }
 
+    public void TestDistanceCoinRequest()
+    {
+        if (!IsOwner || !IsSpawned)
+            return;
+
+        NetworkCoin coin = FindAnyObjectByType<NetworkCoin>();
+
+        if (coin == null)
+            return;
+
+        RequestCollectCoinRpc(coin.NetworkObjectId);
+    }
+
     [Rpc(SendTo.Server)]
     private void RequestCollectCoinRpc(ulong coinId)
     {

@@ -33,4 +33,20 @@ public class ScoreUI : MonoBehaviour
             player.Score.OnValueChanged -= UpdateScore;
         }
     }
+
+
+    public void TestInvalidCoin()
+    {
+        if(player==null)
+            return;
+        player.TestInvaildCoinRequest();
+    }
+
+    public void TestDistanceCoin()
+    {
+        if (player == null)
+            return;
+
+        player.TestDistanceCoinRequest();
+    }
 }
