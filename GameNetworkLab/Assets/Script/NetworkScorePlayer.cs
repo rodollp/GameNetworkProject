@@ -26,6 +26,18 @@ public class NetworkScorePlayer : NetworkBehaviour
         RequestCollectCoinRpc(coinId);
     }
 
+
+
+    public void TestInvaildCoinRequest()
+    {
+        if(!IsOwner)
+        {
+            return;
+        }
+
+        RequestCollectCoinRpc(ulong.MaxValue);
+    }
+
     [Rpc(SendTo.Server)]
     private void RequestCollectCoinRpc(ulong coinId)
     {

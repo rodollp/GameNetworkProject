@@ -30,4 +30,16 @@ public class NetworkLancher : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
     }
+
+    public void DisconnectClient()
+    {
+        if (NetworkManager.Singleton == null)
+            return;
+
+        if (!NetworkManager.Singleton.IsClient ||
+            NetworkManager.Singleton.IsHost)
+            return;
+
+        NetworkManager.Singleton.Shutdown();
+    }
 }
