@@ -6,9 +6,9 @@ public class NetworkLancher : MonoBehaviour
 {
     public static NetworkLancher Instance { get; private set; }
 
-    [SerializeField] private Button addScore;
+    [SerializeField] private Button disconnect;
 
-    public Button AddScore => addScore;
+    public Button DisconnectButton => disconnect;
 
     private void Awake()
     {

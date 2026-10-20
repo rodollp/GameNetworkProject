@@ -807,9 +807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Add Score
-
-'
+  m_text: Disconnect
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1283,7 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a109f7895f672c24dae9b333d3cf099b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkLancher
-  addScore: {fileID: 958316781}
+  disconnect: {fileID: 958316781}
 --- !u!1 &944953601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,7 +1428,7 @@ GameObject:
   - component: {fileID: 958316782}
   - component: {fileID: 958316781}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Disconnect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
