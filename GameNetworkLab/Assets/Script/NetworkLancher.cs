@@ -36,8 +36,7 @@ public class NetworkLancher : MonoBehaviour
         if (NetworkManager.Singleton == null)
             return;
 
-        if (!NetworkManager.Singleton.IsClient ||
-            NetworkManager.Singleton.IsHost)
+        if (!NetworkManager.Singleton.IsClient || NetworkManager.Singleton.IsHost)
             return;
 
         NetworkManager.Singleton.Shutdown();
