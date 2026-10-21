@@ -1,44 +1,47 @@
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NetworkLancher : MonoBehaviour
 {
     public static NetworkLancher Instance { get; private set; }
-
-    [SerializeField] private Button disconnect;
-
-    public Button DisconnectButton => disconnect;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void StartHost()
+    public bool StartHost()
     {
-        if (NetworkManager.Singleton.IsListening)
-            return;
+        NetworkManager manager = NetworkManager.Singleton;
 
-        NetworkManager.Singleton.StartHost();
+        if (manager == null || manager.IsListening ||
+            manager.ShutdownInProgress)
+            return false;
+
+        return manager.StartHost();
     }
 
-    public void StartClient()
+    public bool StartClient()
     {
-        if (NetworkManager.Singleton.IsListening)
-            return;
+        NetworkManager manager = NetworkManager.Singleton;
 
-        NetworkManager.Singleton.StartClient();
+        if (manager == null || manager.IsListening ||
+            manager.ShutdownInProgress)
+            return false;
+
+        return manager.StartClient();
     }
 
     public void DisconnectClient()
     {
-        if (NetworkManager.Singleton == null)
+        NetworkManager manager = NetworkManager.Singleton;
+
+        if (manager == null)
             return;
 
-        if (!NetworkManager.Singleton.IsClient || NetworkManager.Singleton.IsHost)
+        if (!manager.IsClient || manager.IsHost)
             return;
 
-        NetworkManager.Singleton.Shutdown();
+        manager.Shutdown();
     }
 }

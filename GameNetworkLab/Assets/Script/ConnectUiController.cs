@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,35 +6,207 @@ using UnityEngine.UI;
 
 public class ConnectUiController : MonoBehaviour
 {
-    // SerializeField 필드는 Inspector에서 Button과 TMP Text를 연결합니다.
-    [SerializeField] private Button connectButton;
+    [SerializeField] private Button hostButton;
+    [SerializeField] private Button clientButton;
+    [SerializeField] private Button disconnectButton;
     [SerializeField] private TextMeshProUGUI statusText;
 
-    public void StartHostFromButton()
-    {
-        // Forget은 Button 이벤트에서 기다리지 않는 UniTask의 예외를 UniTask 쪽으로 전달합니다.
-        StartHostAsync().Forget();
-    }
+    private NetworkManager manager;
 
-    // UniTask는 Unity PlayerLoop에 맞춘 비동기 반환 형식입니다.
-    private async UniTask StartHostAsync()
-    {
-        connectButton.interactable = false;
-        statusText.text = "Host 시작 중...";
+    private bool isConnecting;
+    private bool isShuttingDown;
+    private bool isHostMode;
 
-        // StartHost는 NetworkManager의 Host 시작 성공 여부를 반환합니다.
-        bool started = NetworkManager.Singleton.StartHost();
-        if (!started)
+    private void Start()
+    {
+        manager = NetworkManager.Singleton;
+
+        if (manager == null)
         {
-            statusText.text = "Host 시작 실패";
-            connectButton.interactable = true;
+            statusText.text = "NetworkManager 없음";
+            SetButtons(false, false, false);
             return;
         }
 
-        // Yield는 다음 PlayerLoop 시점까지 기다립니다.
-        // GetCancellationTokenOnDestroy는 이 GameObject가 파괴되면 대기를 취소합니다.
-        await UniTask.Yield(cancellationToken: this.GetCancellationTokenOnDestroy());
-        statusText.text = "Host 시작 완료";
-        connectButton.interactable = true;
+        manager.OnClientConnectedCallback += OnClientConnected;
+        manager.OnClientDisconnectCallback += OnClientDisconnected;
+
+        RefreshUi();
+    }
+
+    private void OnDestroy()
+    {
+        if (manager == null)
+            return;
+
+        manager.OnClientConnectedCallback -= OnClientConnected;
+        manager.OnClientDisconnectCallback -= OnClientDisconnected;
+    }
+
+    private void Update()
+    {
+        if (manager == null)
+            return;
+
+        if (isShuttingDown && !manager.ShutdownInProgress)
+        {
+            isShuttingDown = false;
+            isConnecting = false;
+
+            RefreshUi();
+        }
+    }
+
+    public void OnHostButtonClicked()
+    {
+        if (!CanStart())
+            return;
+
+        isConnecting = true;
+        isHostMode = true;
+
+        statusText.text = "Host 시작 중...";
+        SetButtons(false, false, false);
+
+        bool started = NetworkLancher.Instance.StartHost();
+
+        if (!started)
+        {
+            isConnecting = false;
+            statusText.text = "Host 시작 실패";
+            RefreshUi();
+            return;
+        }
+
+        // Host 시작 성공은 로컬 Host 실행 상태로 확인
+        isConnecting = false;
+        statusText.text = "Host 실행 중";
+        RefreshUi();
+    }
+
+    public void OnClientButtonClicked()
+    {
+        if (!CanStart())
+            return;
+
+        isConnecting = true;
+        isHostMode = false;
+
+        statusText.text = "Client 접속 중...";
+        SetButtons(false, false, false);
+
+        bool started = NetworkLancher.Instance.StartClient();
+
+        if (!started)
+        {
+            isConnecting = false;
+            statusText.text = "Client 시작 실패";
+            RefreshUi();
+        }
+
+        // 실제 접속 성공은 OnClientConnected에서 처리
+    }
+
+    public void OnDisconnectButtonClicked()
+    {
+        if (manager == null || !manager.IsClient || manager.IsHost)
+            return;
+
+        statusText.text = "연결 종료 중...";
+
+        isConnecting = false;
+        isShuttingDown = true;
+
+        SetButtons(false, false, false);
+
+        NetworkLancher.Instance.DisconnectClient();
+    }
+
+    private void OnClientConnected(ulong clientId)
+    {
+        if (manager == null)
+            return;
+
+        if (clientId != manager.LocalClientId)
+            return;
+
+        isConnecting = false;
+
+        statusText.text = manager.IsHost
+            ? "Host 실행 중"
+            : "Client 접속 완료";
+
+        RefreshUi();
+    }
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        if (manager == null)
+            return;
+
+        if (clientId != manager.LocalClientId)
+            return;
+
+        bool wasConnecting = isConnecting;
+
+        isConnecting = false;
+        isShuttingDown = true;
+
+        statusText.text = wasConnecting
+            ? "Client 접속 실패"
+            : "Client 연결 종료";
+
+        // 연결 실패나 서버 종료 후에는 네트워크 정리가 필요
+        if (!manager.ShutdownInProgress)
+            manager.Shutdown();
+
+        SetButtons(false, false, false);
+    }
+
+    private bool CanStart()
+    {
+        return manager != null
+            && NetworkLancher.Instance != null
+            && !manager.IsListening
+            && !manager.ShutdownInProgress
+            && !isConnecting
+            && !isShuttingDown;
+    }
+
+    private void RefreshUi()
+    {
+        if (manager == null)
+            return;
+
+        if (isConnecting || isShuttingDown || manager.ShutdownInProgress)
+        {
+            SetButtons(false, false, false);
+            return;
+        }
+
+        if (manager.IsHost)
+        {
+            SetButtons(false, false, false);
+        }
+        else if (manager.IsConnectedClient)
+        {
+            SetButtons(false, false, true);
+        }
+        else
+        {
+            SetButtons(true, true, false);
+        }
+    }
+
+    private void SetButtons(bool host, bool client, bool disconnect)
+    {
+        if (hostButton != null)
+            hostButton.interactable = host;
+
+        if (clientButton != null)
+            clientButton.interactable = client;
+
+        if (disconnectButton != null)
+            disconnectButton.interactable = disconnect;
     }
 }
