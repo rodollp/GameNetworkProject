@@ -64,10 +64,7 @@ public class CoinSpawner : NetworkBehaviour
 
             spawnedCount++;
 
-            Debug.Log(
-                $"Coin Spawn! Index: {randomIndex}, " +
-                $"NetworkObjectId: {networkObject.NetworkObjectId}"
-            );
+            
         }
     }
 }

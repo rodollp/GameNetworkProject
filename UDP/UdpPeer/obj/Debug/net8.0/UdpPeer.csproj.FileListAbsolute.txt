@@ -1,0 +1,15 @@
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\bin\Debug\net8.0\UdpPeer.exe
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\bin\Debug\net8.0\UdpPeer.deps.json
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\bin\Debug\net8.0\UdpPeer.runtimeconfig.json
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\bin\Debug\net8.0\UdpPeer.dll
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\bin\Debug\net8.0\UdpPeer.pdb
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.AssemblyInfo.cs
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.sourcelink.json
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.dll
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\refint\UdpPeer.dll
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.pdb
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\UdpPeer.genruntimeconfig.cache
+C:\Users\Admin\Documents\GitHub\GameNetworkProject\UDP\UdpPeer\obj\Debug\net8.0\ref\UdpPeer.dll
